@@ -11,7 +11,7 @@ function App() {
   };
 
   return (
-    <Container as="main" minWidth={{ base: "md", md: "xl" }} py="20px">
+    <Container as="main" minWidth={{ base: "sm", md: "xl" }} py="20px">
       <Heading
         mb="20px"
         as="h1"
