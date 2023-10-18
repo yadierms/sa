@@ -8,44 +8,24 @@ import {
   StackDivider,
   Text,
 } from "@chakra-ui/react";
+import { DISCOUNTS, formatCurrency } from "../utils/helpers";
 
 function Results({ formState }) {
   const { monthlySalary, extraHours, bonifications } = formState;
+  const { getAFP, getChristmasBonus, getISR, getSFS, getVacations } = DISCOUNTS;
 
-  const { format } = new Intl.NumberFormat("es-US", {
-    style: "currency",
-    currency: "DOP",
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
   const rawSalary = +monthlySalary + +extraHours + +bonifications;
-
   const rawSalaryBon = +monthlySalary + +bonifications;
 
-  const DISCOUNTS = {
-    AFP: (salary) => salary * 0.0287,
-    SFS: (salary) => salary * 0.0304,
-    ISR: (salary) => {
-      const annualSalary = salary * 12;
-      let taxValue = 0;
-
-      if (annualSalary >= 416220.01 && annualSalary <= 624329)
-        taxValue = 0.15 * (annualSalary - 416220.01);
-
-      if (annualSalary >= 624329.01 && annualSalary <= 867123)
-        taxValue = 31216 + 0.2 * (annualSalary - 624329.01);
-
-      if (annualSalary >= 867123.01)
-        taxValue = 79776 + 0.25 * (annualSalary - 867123.01);
-
-      return taxValue / 12;
-    },
-    VACATIONS: (monthlySalary) => (monthlySalary / 23.83) * 14,
-    CHRISMAS_BONUS: (monthlySalary) => (monthlySalary * 12) / 12,
-  };
+  const AFP = getAFP(rawSalaryBon);
+  const ISR = getISR(rawSalary);
+  const SFS = getSFS(rawSalaryBon);
+  const vacations = getVacations(monthlySalary);
+  const christmasBonus = getChristmasBonus(monthlySalary);
+  const netSalary = rawSalary - ISR - AFP - SFS;
 
   return (
-    <Card>
+    <Card backgroundColor="gray.300">
       <CardHeader>
         <Heading size="md">Results:</Heading>
       </CardHeader>
@@ -57,7 +37,7 @@ function Results({ formState }) {
               AFP:
             </Heading>
             <Text pt="2" fontSize="sm">
-              {format(DISCOUNTS.AFP(rawSalaryBon))}
+              {formatCurrency(AFP)}
             </Text>
           </Box>
           <Box>
@@ -65,7 +45,7 @@ function Results({ formState }) {
               ARS/SFS:
             </Heading>
             <Text pt="2" fontSize="sm">
-              {format(DISCOUNTS.SFS(rawSalaryBon))}
+              {formatCurrency(SFS)}
             </Text>
           </Box>
           <Box>
@@ -73,7 +53,7 @@ function Results({ formState }) {
               ISR:
             </Heading>
             <Text pt="2" fontSize="sm">
-              {format(DISCOUNTS.ISR(rawSalary))}
+              {formatCurrency(ISR)}
             </Text>
           </Box>
           <Box>
@@ -81,7 +61,7 @@ function Results({ formState }) {
               VACATIONS:
             </Heading>
             <Text pt="2" fontSize="sm">
-              {format(DISCOUNTS.VACATIONS(monthlySalary))}
+              {formatCurrency(vacations)}
             </Text>
           </Box>
           <Box>
@@ -89,7 +69,7 @@ function Results({ formState }) {
               CHRISTMAS BONUS:
             </Heading>
             <Text pt="2" fontSize="sm">
-              {format(DISCOUNTS.CHRISMAS_BONUS(monthlySalary))}
+              {formatCurrency(christmasBonus)}
             </Text>
           </Box>
           <Box>
@@ -97,12 +77,7 @@ function Results({ formState }) {
               NET MONTHLY SALARY:
             </Heading>
             <Text pt="2" fontSize="sm">
-              {format(
-                rawSalary -
-                  DISCOUNTS.ISR(rawSalary) -
-                  DISCOUNTS.SFS(rawSalaryBon) -
-                  DISCOUNTS.SFS(rawSalaryBon)
-              )}
+              {formatCurrency(netSalary)}
             </Text>
           </Box>
         </Stack>
