@@ -11,6 +11,14 @@ import {
 
 function Results({ formState }) {
   const { monthlySalary, extraHours, bonifications } = formState;
+
+  const { format } = new Intl.NumberFormat("es-US", {
+    style: "currency",
+    currency: "DOP",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+
   const DISCOUNTS = {
     AFP: (monthlySalary) => monthlySalary * 0.0287,
     SFS: (monthlySalary) => monthlySalary * 0.0304,
@@ -46,7 +54,7 @@ function Results({ formState }) {
               AFP:
             </Heading>
             <Text pt="2" fontSize="sm">
-              {DISCOUNTS.AFP(monthlySalary)}
+              {format(DISCOUNTS.AFP(monthlySalary))}
             </Text>
           </Box>
           <Box>
@@ -54,7 +62,7 @@ function Results({ formState }) {
               ARS/SFS:
             </Heading>
             <Text pt="2" fontSize="sm">
-              {DISCOUNTS.SFS(monthlySalary)}
+              {format(DISCOUNTS.SFS(monthlySalary))}
             </Text>
           </Box>
           <Box>
@@ -62,7 +70,7 @@ function Results({ formState }) {
               ISR:
             </Heading>
             <Text pt="2" fontSize="sm">
-              {DISCOUNTS.ISR(monthlySalary)}
+              {format(DISCOUNTS.ISR(monthlySalary))}
             </Text>
           </Box>
           <Box>
@@ -70,7 +78,7 @@ function Results({ formState }) {
               VACATIONS
             </Heading>
             <Text pt="2" fontSize="sm">
-              {DISCOUNTS.VACATIONS(monthlySalary)}
+              {format(DISCOUNTS.VACATIONS(monthlySalary))}
             </Text>
           </Box>
           <Box>
@@ -78,7 +86,7 @@ function Results({ formState }) {
               CHRISTMAS BONUS:
             </Heading>
             <Text pt="2" fontSize="sm">
-              {DISCOUNTS.CHRISMAS_BONUS(monthlySalary)}
+              {format(DISCOUNTS.CHRISMAS_BONUS(monthlySalary))}
             </Text>
           </Box>
           <Box>
@@ -86,7 +94,7 @@ function Results({ formState }) {
               NET MONTHLY SALARY:
             </Heading>
             <Text pt="2" fontSize="sm">
-              {monthlySalary || "0"}
+              {format(monthlySalary)}
             </Text>
           </Box>
         </Stack>
