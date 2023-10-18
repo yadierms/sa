@@ -97,7 +97,12 @@ function Results({ formState }) {
               NET MONTHLY SALARY:
             </Heading>
             <Text pt="2" fontSize="sm">
-              {format(rawSalary)}
+              {format(
+                rawSalary -
+                  DISCOUNTS.ISR(rawSalary) -
+                  DISCOUNTS.SFS(rawSalaryBon) -
+                  DISCOUNTS.SFS(rawSalaryBon)
+              )}
             </Text>
           </Box>
         </Stack>
