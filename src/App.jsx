@@ -11,16 +11,18 @@ function App() {
   };
 
   return (
-    <Container as="main" minWidth="4xl" py="20px">
+    <Container as="main" minWidth={{ base: "md", md: "xl" }} py="20px">
       <Heading
         mb="20px"
         as="h1"
         bgColor="rgba(13,110,253,255) "
         color="white"
-        padding="4px 2px"
+        py="1rem"
+        mt="4px"
+        size="md"
         textAlign="center"
         verticalAlign="center"
-        borderRadius="5px"
+        rounded="md"
       >
         Salary Discount Calculator
       </Heading>
@@ -28,7 +30,6 @@ function App() {
         Input
       </Heading>
       <FormApp onFormSubmit={onFormSubmit} />
-      {/* <Divider /> */}
       {formData && <Results formState={formData} />}
     </Container>
   );

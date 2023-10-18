@@ -31,7 +31,7 @@ function FormApp({ onFormSubmit }) {
           value={formState.monthlySalary}
         />
       </FormControl>
-      <FormControl>
+      <FormControl mt={2}>
         <FormLabel>Bonifications (in DOP)</FormLabel>
         <Input
           placeholder="Bonifications"
@@ -41,7 +41,7 @@ function FormApp({ onFormSubmit }) {
           value={formState.bonifications}
         />
       </FormControl>
-      <FormControl>
+      <FormControl mt={2}>
         <FormLabel>Extra Hours (in DOP)</FormLabel>
         <Input
           placeholder="Extra Hours"
