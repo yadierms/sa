@@ -78,7 +78,7 @@ function Results({ formState }) {
           </Box>
           <Box>
             <Heading size="xs" textTransform="uppercase">
-              VACATIONS
+              VACATIONS:
             </Heading>
             <Text pt="2" fontSize="sm">
               {format(DISCOUNTS.VACATIONS(monthlySalary))}
