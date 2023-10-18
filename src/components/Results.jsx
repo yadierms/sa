@@ -18,12 +18,15 @@ function Results({ formState }) {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
+  const rawSalary = +monthlySalary + +extraHours + +bonifications;
+
+  const rawSalaryBon = +monthlySalary + +bonifications;
 
   const DISCOUNTS = {
-    AFP: (monthlySalary) => monthlySalary * 0.0287,
-    SFS: (monthlySalary) => monthlySalary * 0.0304,
-    ISR: (monthlySalary) => {
-      const annualSalary = monthlySalary * 12;
+    AFP: (salary) => salary * 0.0287,
+    SFS: (salary) => salary * 0.0304,
+    ISR: (salary) => {
+      const annualSalary = salary * 12;
       let taxValue = 0;
 
       if (annualSalary >= 416220.01 && annualSalary <= 624329)
@@ -54,7 +57,7 @@ function Results({ formState }) {
               AFP:
             </Heading>
             <Text pt="2" fontSize="sm">
-              {format(DISCOUNTS.AFP(monthlySalary))}
+              {format(DISCOUNTS.AFP(rawSalaryBon))}
             </Text>
           </Box>
           <Box>
@@ -62,7 +65,7 @@ function Results({ formState }) {
               ARS/SFS:
             </Heading>
             <Text pt="2" fontSize="sm">
-              {format(DISCOUNTS.SFS(monthlySalary))}
+              {format(DISCOUNTS.SFS(rawSalaryBon))}
             </Text>
           </Box>
           <Box>
@@ -70,7 +73,7 @@ function Results({ formState }) {
               ISR:
             </Heading>
             <Text pt="2" fontSize="sm">
-              {format(DISCOUNTS.ISR(monthlySalary))}
+              {format(DISCOUNTS.ISR(rawSalary))}
             </Text>
           </Box>
           <Box>
@@ -94,7 +97,7 @@ function Results({ formState }) {
               NET MONTHLY SALARY:
             </Heading>
             <Text pt="2" fontSize="sm">
-              {format(monthlySalary)}
+              {format(rawSalary)}
             </Text>
           </Box>
         </Stack>
