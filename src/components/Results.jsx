@@ -8,11 +8,12 @@ import {
   StackDivider,
   Text,
 } from "@chakra-ui/react";
-import { DISCOUNTS, formatCurrency } from "../utils/helpers";
+import { CALCULATOR, formatCurrency } from "../utils/helpers";
 
 function Results({ formState }) {
-  const { monthlySalary, extraHours, bonifications } = formState;
-  const { getAFP, getChristmasBonus, getISR, getSFS, getVacations } = DISCOUNTS;
+  const { monthlySalary, extraHours, bonifications, timeWorking } = formState;
+  const { getAFP, getChristmasBonus, getISR, getSFS, getVacations } =
+    CALCULATOR;
 
   const rawSalary = +monthlySalary + +extraHours + +bonifications;
   const rawSalaryBon = +monthlySalary + +bonifications;
@@ -20,16 +21,15 @@ function Results({ formState }) {
   const AFP = getAFP(rawSalaryBon);
   const ISR = getISR(rawSalary);
   const SFS = getSFS(rawSalaryBon);
-  const vacations = getVacations(monthlySalary);
-  const christmasBonus = getChristmasBonus(monthlySalary);
+  const vacations = getVacations(monthlySalary, timeWorking);
+  const christmasBonus = getChristmasBonus(monthlySalary, timeWorking);
   const netSalary = rawSalary - ISR - AFP - SFS;
 
   return (
     <Card backgroundColor="gray.300">
       <CardHeader>
-        <Heading size="md">Results:</Heading>
+        <Heading size="md">Results</Heading>
       </CardHeader>
-
       <CardBody>
         <Stack divider={<StackDivider />} spacing="4">
           <Box>

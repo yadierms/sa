@@ -5,7 +5,7 @@ export function formatCurrency(value) {
   }).format(value);
 }
 
-export const DISCOUNTS = {
+export const CALCULATOR = {
   getAFP: (salary) => salary * 0.0287,
   getSFS: (salary) => salary * 0.0304,
   getISR: (salary) => {
@@ -22,6 +22,13 @@ export const DISCOUNTS = {
 
     return taxValue / 12;
   },
-  getVacations: (monthlySalary) => (monthlySalary / 23.83) * 14,
-  getChristmasBonus: (monthlySalary) => (monthlySalary * 12) / 12,
+  getVacations: (monthlySalary, timeWorking) =>
+    (monthlySalary / 23.83) * Number(timeWorking),
+  getChristmasBonus: (monthlySalary, timeWorking) => {
+    const timeValue = Number(timeWorking) - 1;
+    if (timeValue > 12) {
+      return (monthlySalary * 12) / 12;
+    }
+    return (monthlySalary * timeValue) / 12;
+  },
 };
